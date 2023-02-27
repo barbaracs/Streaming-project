@@ -14,8 +14,12 @@ const service = new Service({
 await service.loadModel()
 postMessage('READY')
 
-onmessage = ({ data }) => {
+onmessage = async ({ data: video }) => {
+    const blinked = await service.hadBlinked(video)
+
+    if(!blinked) return
+
     postMessage({
-        'ok': 'ok'
+        blinked
     })
 }
